@@ -35,7 +35,7 @@
 安装方式:
 
     download zip
-    git clone 还没确定
+    git clone https://github.com/Special-Week/nonebot_plugin_newbingChat.git
     剩下的你手动解决
 
 
