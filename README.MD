@@ -1,5 +1,6 @@
 # nonebot_plugin_newbingChat
 使用了new bing + [EdgeGPT](https://github.com/acheong08/EdgeGPT) 的nonebot2插件, 支持多cookie同时配置, 有多少账号能拿多少
+由于触发条件比较简单, 适合自己注册多账号配置, 如果单账号被大量使用, 容易被bing暂时限制
 
 
 
