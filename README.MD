@@ -11,7 +11,7 @@
 功能:
 
     调用new bing进行对话, 支持上下文, 单账号, 其他人无法插嘴
-    at机器人 + 内容, 机器人即可相应
+    bing + 内容, 机器人即可相应
     一定时间内一个账号只能创建一个聊天对象, 防止滥用(su任意)
     通过由on_command生成的响应器 "重置会话", 可直接重置会话, 重新创建聊天对象
 
@@ -47,14 +47,19 @@ env配置项目:
 
 |config             |type            |default    |example                                  |usage                                   |
 |-------------------|----------------|-----------|-----------------------------------------|----------------------------------------|
-|cdtime             |int             |1800       |cdtime  = 114514               |一定时间内只能创建一个聊天对象|
-|bot_nickname       |str             |"Hinata"    |bot_nickname = "Hinata"               |你bot的昵称, 回复的时候bing会替换成你bot的昵称  |
+|newbing_cd_time    |int             |600        |newbing_cd_time  = 114514                |一定时间内只能创建一个聊天对象|
+|bing_proxy         |str             |""         |bing_proxy = "http://127.0.0.1:1081"     |newbing的代理, 配置详细请看下文      |
+| bing_private      |boolean         |false      |bing_private = True                      |私聊时是否启用bing聊天            |
+|bing_style_type    |str             |creative   |bing_style_type = "creative"             |newbing的风格, "creative", "balanced", "precise", 三选一, 乱填报错我不管|
 
+## bing_proxy的配置:
 
+    1. 你需要使用v2ray或者clash等代理工具开启本地监听端口
+    2. 根据http和socks5的不同, 配置不同, 
+    3. 以v2rayN举例, 本地监听端口1080, 你应该配置成"socks5://127.0.0.1:1080"或者"http://127.0.0.1:1081"
 
 
 响应器如下:
 
-    bingchat = on_message(rule=to_me(), priority=1145141919810, block=False)
-    reserve = on_command("重置会话", aliases={"重置bing"}, priority=10, block=True)
-    bingHelp = on_command("bing帮助", aliases={"binghelp"}, priority=10, block=True)
+    on_command("bing", priority=55, block=True, handlers=[newbing.bing_handle])
+    on_command("重置bing", aliases={"重置会话", "bing重置", "会话重置"}, priority=10, block=True, handlers=[newbing.reserve_bing])
